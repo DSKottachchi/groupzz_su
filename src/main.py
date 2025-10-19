@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from sklearn.datasets import load_diabetes
 import joblib
 import json
 import numpy as np
@@ -15,6 +14,7 @@ with open("model/metrics.json") as f:
 
 FEATURES = ["age", "sex", "bmi", "bp", "s1", "s2", "s3", "s4", "s5", "s6"]
 
+
 class PredictRequest(BaseModel):
     age: float
     sex: float
@@ -27,14 +27,15 @@ class PredictRequest(BaseModel):
     s5: float
     s6: float
 
+
 # Health check endpoint
-# TODO: get model version from metrics.json
 @app.get("/health")
 async def health_check():
     return {
         "status": "ok",
-        "model_version": "0.1.0"
+        "model_version": "v0.1"
     }
+
 
 # To predict if the patient needed follow ups
 @app.post("/predict")
